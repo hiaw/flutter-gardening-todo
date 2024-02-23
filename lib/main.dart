@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Rush Gardening To Do'),
     );
   }
 }
@@ -31,7 +31,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void _incrementCounter() {}
+  void _openMap() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const TestGoogleMap()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +43,11 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const TestGoogleMap(),
+      body: const Center(),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _openMap,
         tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.map),
       ),
     );
   }
