@@ -10,7 +10,7 @@ class ToDo {
   // ToDoState state =ToDoState.todo;
   // LatLng? location;
   //
-  String title = Random().nextInt(10000).toString();
+  String title = randomString();
   ToDoState state = ToDoState.values[Random().nextInt(ToDoState.values.length)];
   LatLng? location = randomLocation();
 }

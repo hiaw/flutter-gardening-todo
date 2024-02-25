@@ -25,6 +25,14 @@ class _MapComponent extends State<MapComponent> {
         target: mapCenter,
         zoom: 11.0,
       ),
+      markers: {
+        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
+        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
+        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
+        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
+        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
+        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
+      },
     );
   }
 }
