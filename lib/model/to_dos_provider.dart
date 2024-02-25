@@ -21,6 +21,11 @@ class ToDosProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateTodo(ToDo todo) {
+    _todos[_todos.indexWhere((e) => e.id == todo.id)] = todo;
+    notifyListeners();
+  }
+
   List<ToDo> get scheduled {
     return todos.where((todo) => todo.state == ToDoState.scheduled).toList();
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:test_drive/model/to_do.dart';
+import 'package:test_drive/model/to_dos_provider.dart';
 
 class ToDoEdit extends StatefulWidget {
   const ToDoEdit({super.key, required this.todo});
@@ -13,6 +15,14 @@ class ToDoEdit extends StatefulWidget {
 
 class _ToDoEditState extends State<ToDoEdit> {
   ToDoState _selectedSegment = ToDoState.todo;
+  String _title = "";
+
+  @override
+  void initState() {
+    _selectedSegment = widget.todo.state;
+    _title = widget.todo.title;
+    super.initState();
+  }
 
   void _onValueChanged(ToDoState? value) {
     if (value != null) {
@@ -22,10 +32,18 @@ class _ToDoEditState extends State<ToDoEdit> {
     }
   }
 
-  @override
-  void initState() {
-    _selectedSegment = widget.todo.state;
-    super.initState();
+  void _onTitleChange(String? value) {
+    if (value != null) {
+      setState(() {
+        _title = value;
+      });
+    }
+  }
+
+  void _onSave() {
+    widget.todo.title = _title;
+    widget.todo.state = _selectedSegment;
+    Provider.of<ToDosProvider>(context, listen: false).updateTodo(widget.todo);
   }
 
   @override
@@ -56,6 +74,27 @@ class _ToDoEditState extends State<ToDoEdit> {
               },
               onValueChanged: _onValueChanged,
             ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              initialValue: _title,
+              onChanged: _onTitleChange,
+              decoration: const InputDecoration(
+                labelText: "To Do Title",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: _onSave,
+            child: const Text("Save"),
           )
         ],
       ),
