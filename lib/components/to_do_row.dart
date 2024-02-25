@@ -23,7 +23,7 @@ class _ToDoRowState extends State<ToDoRow> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const ToDoEdit(),
+        builder: (context) => ToDoEdit(todo: widget.todo),
       ),
     );
   }
