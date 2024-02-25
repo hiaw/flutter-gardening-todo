@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_drive/components/map_component.dart';
 import 'package:test_drive/model/to_dos_provider.dart';
-import 'package:test_drive/page/test_google_map.dart';
 import 'package:test_drive/page/to_do_page.dart';
 
 void main() {
@@ -38,15 +38,9 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  void _openMap() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const TestGoogleMap(),
-      ),
-    );
-  }
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController controller = TabController(length: 2, vsync: this);
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +49,24 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const ToDoPage(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _openMap,
-        tooltip: 'Increment',
-        child: const Icon(Icons.map),
+      resizeToAvoidBottomInset: true,
+      bottomNavigationBar: Material(
+        child: TabBar(
+          controller: controller,
+          tabs: const <Tab>[
+            Tab(icon: Icon(Icons.list)),
+            Tab(icon: Icon(Icons.map)),
+          ],
+        ),
+      ),
+      body: SafeArea(
+        child: TabBarView(
+          controller: controller,
+          children: const <Widget>[
+            ToDoPage(),
+            MapComponent(),
+          ],
+        ),
       ),
     );
   }
