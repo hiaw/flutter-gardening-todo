@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:test_drive/model/to_dos_provider.dart';
 
 import '../utils/randomPosition.dart';
 
@@ -19,20 +21,19 @@ class _MapComponent extends State<MapComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(
-      onMapCreated: _onMapCreated,
-      initialCameraPosition: const CameraPosition(
-        target: mapCenter,
-        zoom: 11.0,
-      ),
-      markers: {
-        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
-        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
-        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
-        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
-        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
-        Marker(markerId: MarkerId(randomString()), position: randomLocation()),
-      },
-    );
+    return Consumer<ToDosProvider>(builder: (context, todos, child) {
+      Set<Marker> markers = todos.scheduled
+          .map((todo) => Marker(
+              markerId: MarkerId(todo.id.toString()), position: todo.location))
+          .toSet();
+
+      return GoogleMap(
+          onMapCreated: _onMapCreated,
+          initialCameraPosition: const CameraPosition(
+            target: mapCenter,
+            zoom: 11.0,
+          ),
+          markers: markers);
+    });
   }
 }

@@ -20,4 +20,8 @@ class ToDosProvider extends ChangeNotifier {
     _todos.removeRange(0, _todos.length);
     notifyListeners();
   }
+
+  List<ToDo> get scheduled {
+    return todos.where((todo) => todo.state == ToDoState.scheduled).toList();
+  }
 }
