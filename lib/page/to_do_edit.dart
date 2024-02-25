@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:test_drive/model/to_do.dart';
 import 'package:test_drive/model/to_dos_provider.dart';
@@ -16,11 +17,15 @@ class ToDoEdit extends StatefulWidget {
 class _ToDoEditState extends State<ToDoEdit> {
   ToDoState _selectedSegment = ToDoState.todo;
   String _title = "";
+  String _lat = "";
+  String _lng = "";
 
   @override
   void initState() {
     _selectedSegment = widget.todo.state;
     _title = widget.todo.title;
+    _lat = widget.todo.location.latitude.toString();
+    _lng = widget.todo.location.longitude.toString();
     super.initState();
   }
 
@@ -40,9 +45,26 @@ class _ToDoEditState extends State<ToDoEdit> {
     }
   }
 
+  void _onLatChange(String? value) {
+    if (value != null) {
+      setState(() {
+        _lat = value;
+      });
+    }
+  }
+
+  void _onLngChange(String? value) {
+    if (value != null) {
+      setState(() {
+        _lng = value;
+      });
+    }
+  }
+
   void _onSave() {
     widget.todo.title = _title;
     widget.todo.state = _selectedSegment;
+    widget.todo.location = LatLng(double.parse(_lat), double.parse(_lng));
     Provider.of<ToDosProvider>(context, listen: false).updateTodo(widget.todo);
   }
 
@@ -85,6 +107,34 @@ class _ToDoEditState extends State<ToDoEdit> {
               onChanged: _onTitleChange,
               decoration: const InputDecoration(
                 labelText: "To Do Title",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              initialValue: _lat,
+              onChanged: _onLatChange,
+              decoration: const InputDecoration(
+                labelText: "Latitude",
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              initialValue: _lng,
+              onChanged: _onLngChange,
+              decoration: const InputDecoration(
+                labelText: "Longitude",
                 border: OutlineInputBorder(),
               ),
             ),
