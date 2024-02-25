@@ -23,11 +23,22 @@ class _ToDoPageState extends State<ToDoPage> {
     return Column(
       children: [
         Consumer<ToDosProvider>(
-          builder: (context, todos, child) => ElevatedButton(
-            onPressed: () {
-              todos.add(ToDo());
-            },
-            child: const Text("New To Do"),
+          builder: (context, todos, child) => Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  todos.add(ToDo());
+                },
+                child: const Text("New To Do"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  todos.removeAll();
+                },
+                child: const Text("Remove All"),
+              ),
+            ],
           ),
         ),
         const Expanded(

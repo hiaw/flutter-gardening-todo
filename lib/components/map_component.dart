@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../utils/randomPosition.dart';
+
 class MapComponent extends StatefulWidget {
   const MapComponent({super.key});
 
@@ -11,8 +13,6 @@ class MapComponent extends StatefulWidget {
 class _MapComponent extends State<MapComponent> {
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(45.521563, -122.677433);
-
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
@@ -21,8 +21,8 @@ class _MapComponent extends State<MapComponent> {
   Widget build(BuildContext context) {
     return GoogleMap(
       onMapCreated: _onMapCreated,
-      initialCameraPosition: CameraPosition(
-        target: _center,
+      initialCameraPosition: const CameraPosition(
+        target: mapCenter,
         zoom: 11.0,
       ),
     );

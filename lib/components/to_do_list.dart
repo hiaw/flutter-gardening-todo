@@ -14,12 +14,15 @@ class ToDoList extends StatefulWidget {
 class _ToDoListState extends State<ToDoList> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ToDosProvider>(
-      builder: (context, todos, child) => ListView.builder(
-        itemCount: todos.length(),
-        itemBuilder: (BuildContext context, int index) {
-          return const ToDoRow();
-        },
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Consumer<ToDosProvider>(
+        builder: (context, todos, child) => ListView.builder(
+          itemCount: todos.todos.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ToDoRow(todo: todos.todos[index]);
+          },
+        ),
       ),
     );
   }
