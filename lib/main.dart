@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:test_drive/components/to_do_list.dart';
+import 'package:provider/provider.dart';
+import 'package:test_drive/model/to_dos_provider.dart';
 import 'package:test_drive/page/test_google_map.dart';
+import 'package:test_drive/page/to_do_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (BuildContext context) => ToDosProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -34,8 +40,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   void _openMap() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const TestGoogleMap()));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const TestGoogleMap(),
+      ),
+    );
   }
 
   @override
@@ -45,14 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Column(
-        children: [
-          Text("what is this"),
-          Expanded(
-            child: SizedBox(height: 200, child: ToDoList()),
-          ),
-        ],
-      ),
+      body: const ToDoPage(),
       floatingActionButton: FloatingActionButton(
         onPressed: _openMap,
         tooltip: 'Increment',
