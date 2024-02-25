@@ -1,6 +1,10 @@
-# test_drive
+# Rush Gardening To Do
 
-A new Flutter project.
+A Flutter project to creates a todo list where the scheduled todos are drawn on a map and solving a travelling salesman problem to display the shortest path
+
+![Map](./doc/map.png)
+![Home](./doc/home.png)
+![Edit](./doc/edit.png)
 
 ## Getting Started
 
